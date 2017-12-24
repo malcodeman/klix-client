@@ -1,3 +1,36 @@
 body {
     margin: 0;
 }
+
+a {
+    text-decoration: none;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.main {
+    overflow-y: auto;
+    background-color: #1B1B1B;
+}
+
+.article {
+    border-bottom: 1px solid #444;
+    color: #F5F5F5;
+    display: flex;
+    padding: 1rem;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .8rem;
+    justify-content: space-between;
+}
+
+.article-id {
+    margin-right: 1rem;
+}
+
+.article-shares{
+    margin-right: 1rem;
+}
