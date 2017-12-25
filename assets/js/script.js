@@ -1,19 +1,22 @@
 var Xray = require('x-ray');
 var x = Xray();
 
-x('https://www.klix.ba/najnovije', 'article', [{
-        headline: 'a h1',
-        link: "a@href",
-        category: ".above .kategorija",
-        shares: ".above .shareovi",
-        comments: ".below .comments"
-    }])
-    (function (err, res) {
-        for (let i = 0; i < res.length; ++i) {
-            renderArticle(i + 1, res[i].headline, res[i].shares, res[i].comments);
-        }
-    })
-
+function getArticles() {
+    x("https://www.klix.ba/najnovije/str1", "article", [{
+            headline: 'a h1',
+            link: "a@href",
+            category: ".above .kategorija",
+            shares: ".above .shareovi",
+            comments: ".below .comments"
+        }])
+        .paginate('.sljedeca@href')
+        .limit(1)
+        (function (err, res) {
+            for (let i = 0; i < res.length; ++i) {
+                renderArticle(i + 1, res[i].headline, res[i].shares, res[i].comments);
+            }
+        })
+}
 
 function renderArticle(id, headline, shares, comments) {
     let article = document.createElement("article");
@@ -35,7 +38,6 @@ function renderArticle(id, headline, shares, comments) {
     let article_shares = document.createElement("span");
     article_shares.classList.add("article-shares");
     if (shares == 1) {
-        console.log("Usao !!")
         shares += " share"
     } else {
         shares += " shares"
@@ -61,3 +63,9 @@ function renderArticle(id, headline, shares, comments) {
 
     document.getElementById("main").appendChild(article);
 }
+
+function main(){
+    getArticles();
+}
+
+main();
