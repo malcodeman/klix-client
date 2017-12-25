@@ -1,5 +1,8 @@
-var Xray = require('x-ray');
-var x = Xray();
+const Xray = require('x-ray');
+const x = Xray();
+const {
+    remote
+} = require("electron");
 
 function getArticles() {
     x("https://www.klix.ba/najnovije/str1", "article", [{
@@ -64,8 +67,31 @@ function renderArticle(id, headline, shares, comments) {
     document.getElementById("main").appendChild(article);
 }
 
-function main(){
-    getArticles();
+function clearMain() {
+    document.getElementById("main").innerHTML = "";
 }
+
+function main() {
+    document.getElementById("new").addEventListener("click", () => {
+        clearMain();
+        getArticles();
+    });
+}
+
+function minimizeWindow() {
+    remote.BrowserWindow.getFocusedWindow().minimize();
+}
+
+function maximizeWindow() {
+    remote.BrowserWindow.getFocusedWindow().maximize();
+}
+
+function closeWindow() {
+    remote.BrowserWindow.getFocusedWindow().close();
+}
+
+document.getElementById("minimize").addEventListener("click", minimizeWindow);
+document.getElementById("maximize").addEventListener("click", maximizeWindow);
+document.getElementById("close").addEventListener("click", closeWindow);
 
 main();
