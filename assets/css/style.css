@@ -17,7 +17,7 @@ a {
 /* Navigation */
 
 .nav {
-    min-height: 64px;
+    min-height: 48px;
     background-color: #3A3A3A;
     display: flex;
     align-items: center;
@@ -33,7 +33,7 @@ a {
 .nav .link {
     color: #F5F5F5;
     font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
+    font-size: .8rem;
     padding: .4rem .4rem .4rem 0;
     cursor: pointer;
 }
@@ -42,12 +42,14 @@ a {
     margin-left: 1rem;
 }
 
-.ic-window {
-    border-radius: 50%;
-    height: 18px;
-    width: 18px;
+.x {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .8rem;
+    text-transform: uppercase;
     margin-right: 1rem;
-    background-color: rgba(0, 0, 0, .4);
+    cursor: default;
+    padding: .4rem 0 .4rem .4rem;
 }
 
 .main {

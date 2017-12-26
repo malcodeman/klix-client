@@ -1,24 +1,21 @@
-const Xray = require('x-ray');
+const Xray = require("x-ray");
 const x = Xray();
+const fs = require("fs");
 const {
     remote
 } = require("electron");
 
-function getArticles() {
-    x("https://www.klix.ba/najnovije/str1", "article", [{
-            headline: 'a h1',
+function getArticles(pageNumber) {
+    x("https://www.klix.ba/najnovije/str" + pageNumber, "article", [{
+            headline: "a h1",
             link: "a@href",
             category: ".above .kategorija",
             shares: ".above .shareovi",
             comments: ".below .comments"
         }])
-        .paginate('.sljedeca@href')
-        .limit(1)
-        (function (err, res) {
-            for (let i = 0; i < res.length; ++i) {
-                renderArticle(i + 1, res[i].headline, res[i].shares, res[i].comments);
-            }
-        })
+        .paginate(".sljedeca@href")
+        .limit(5)
+        .write("response.json")
 }
 
 function renderArticle(id, headline, shares, comments) {
@@ -67,31 +64,55 @@ function renderArticle(id, headline, shares, comments) {
     document.getElementById("main").appendChild(article);
 }
 
+function loadArticles() {
+    return JSON.parse(fs.readFileSync("response.json", "utf8"));
+}
+
+function renderArticles(articles) {
+    for (let i = 0; i < articles.length; ++i) {
+        renderArticle(i + 1, articles[i].headline, articles[i].shares, articles[i].comments);
+    }
+}
+
+// Sortings
+
+function sortByComments(articles, reverse = false) {
+    articles.sort(function (a, b) {
+        return parseInt(a.comments) - parseInt(b.comments);
+    });
+    if (reverse) {
+        return articles.reverse();
+    }
+    return articles;
+}
+
+function sortByShares(articles, reverse = false) {
+    articles.sort(function (a, b) {
+        return parseInt(a.shares) - parseInt(b.shares);
+    });
+    if (reverse) {
+        return articles.reverse();
+    }
+    return articles;
+}
+
 function clearMain() {
     document.getElementById("main").innerHTML = "";
 }
 
 function main() {
+    let articles = loadArticles();
+    console.log(articles);
+    clearMain();
+    sortByComments(articles, true)
+    renderArticles(articles);
     document.getElementById("new").addEventListener("click", () => {
         clearMain();
-        getArticles();
+        getArticles(1);
+    });
+    document.getElementById("x").addEventListener("click", () => {
+        remote.BrowserWindow.getFocusedWindow().close();
     });
 }
-
-function minimizeWindow() {
-    remote.BrowserWindow.getFocusedWindow().minimize();
-}
-
-function maximizeWindow() {
-    remote.BrowserWindow.getFocusedWindow().maximize();
-}
-
-function closeWindow() {
-    remote.BrowserWindow.getFocusedWindow().close();
-}
-
-document.getElementById("minimize").addEventListener("click", minimizeWindow);
-document.getElementById("maximize").addEventListener("click", maximizeWindow);
-document.getElementById("close").addEventListener("click", closeWindow);
 
 main();
