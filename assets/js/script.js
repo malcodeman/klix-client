@@ -96,22 +96,51 @@ function sortByShares(articles, reverse = false) {
     return articles;
 }
 
+function changeSort(articles) {
+    clearMain();
+    let sort = getSort();
+    if (sort === "date") {
+        renderArticles(sortByComments(articles, true));
+        document.getElementById("sort_label").textContent = "Comments";
+        setSort("comments");
+    } else if (sort === "comments") {
+        renderArticles(sortByShares(articles, true));
+        document.getElementById("sort_label").textContent = "Shares";
+        setSort("shares");
+    } else if (sort === "shares") {
+        renderArticles(loadArticles());
+        document.getElementById("sort_label").textContent = "Date";
+        setSort("date");
+    }
+}
+
 function clearMain() {
     document.getElementById("main").innerHTML = "";
 }
 
+function getSort() {
+    return localStorage.getItem("sort");
+}
+
+function setSort(newSort) {
+    localStorage.setItem("sort", newSort);
+}
+
 function main() {
-    let articles = loadArticles();
+    const articles = loadArticles();
     console.log(articles);
     clearMain();
-    sortByComments(articles, true)
     renderArticles(articles);
-    document.getElementById("new").addEventListener("click", () => {
+    localStorage.setItem("sort", "date");
+    /*document.getElementById("new").addEventListener("click", () => {
         clearMain();
         getArticles(1);
-    });
+    });*/
     document.getElementById("x").addEventListener("click", () => {
         remote.BrowserWindow.getFocusedWindow().close();
+    });
+    document.getElementById("sort").addEventListener("click", () => {
+        changeSort(articles);
     });
 }
 
