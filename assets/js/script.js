@@ -25,49 +25,55 @@ function loadArticles() {
     return JSON.parse(fs.readFileSync("response.json", "utf8"));
 }
 
-// Sortings
-
-function changeSortLabel(newLabel) {
-    document.getElementById("sort_label").textContent = newLabel;
+function changeTextContent(elementId, newText) {
+    document.getElementById(elementId).textContent = newText;
 }
 
+// Sortings
+
 function changeSort(art) {
-    clearMain();
-    let sort = getSort();
+    clearElement("main");
+    let sort = getFromLocalStorage("sort");
     if (sort === "date") {
         renderArticles.renderArticles(sortArticles.sortByComments(art, true));
-        changeSortLabel("Comments");
-        setSort("comments");
+        changeTextContent("sort_label", "Comments");
+        setToLocalStorage("sort", "comments");
     } else if (sort === "comments") {
         renderArticles.renderArticles(sortArticles.sortByShares(art, true));
-        changeSortLabel("Shares");
-        setSort("shares");
+        changeTextContent("sort_label", "Shares");
+        setToLocalStorage("sort", "shares");
     } else if (sort === "shares") {
         renderArticles.renderArticles(loadArticles());
-        changeSortLabel("Date");
-        setSort("date");
+        changeTextContent("sort_label", "Date");
+        setToLocalStorage("sort", "date");
     }
 }
 
-function clearMain() {
-    document.getElementById("main").innerHTML = "";
+// Local storage
+
+function setToLocalStorage(key, data) {
+    localStorage.setItem(key, data);
 }
 
-function getSort() {
-    return localStorage.getItem("sort");
+function getFromLocalStorage(key) {
+    return localStorage.getItem(key);
 }
 
-function setSort(newSort) {
-    localStorage.setItem("sort", newSort);
+function clearLocalStorage() {
+    localStorage.clear();
+}
+
+function clearElement(elementId) {
+    document.getElementById(elementId).innerHTML = "";
 }
 
 function main() {
-    //getArticles(1, 5);
+    clearLocalStorage();
     const art = loadArticles();
     console.log(art);
-    clearMain();
+    clearElement("main");
     renderArticles.renderArticles(art);
-    localStorage.setItem("sort", "date");
+    setToLocalStorage("sort", "date");
     /*document.getElementById("new").addEventListener("click", () => {
         clearMain();
         getArticles(1);

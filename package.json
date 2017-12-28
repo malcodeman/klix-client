@@ -10,5 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "x-ray": "^2.3.2"
+  },
+  "devDependencies": {
+    "electron": "^1.7.10"
   }
 }
