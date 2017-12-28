@@ -7,6 +7,7 @@ const {
 
 const renderArticles = require("./assets/js/renderArticles");
 const sortArticles = require("./assets/js/sortArticles");
+const ls = require("./assets/js/localStorage")
 
 function getArticles(pageNumber, limit) {
     x("https://www.klix.ba/najnovije/str" + pageNumber, "article", [{
@@ -29,38 +30,22 @@ function changeTextContent(elementId, newText) {
     document.getElementById(elementId).textContent = newText;
 }
 
-// Sortings
-
 function changeSort(art) {
     clearElement("main");
-    let sort = getFromLocalStorage("sort");
+    let sort = ls.getFromLocalStorage("sort");
     if (sort === "date") {
         renderArticles.renderArticles(sortArticles.sortByComments(art, true));
         changeTextContent("sort_label", "Comments");
-        setToLocalStorage("sort", "comments");
+        ls.setToLocalStorage("sort", "comments");
     } else if (sort === "comments") {
         renderArticles.renderArticles(sortArticles.sortByShares(art, true));
         changeTextContent("sort_label", "Shares");
-        setToLocalStorage("sort", "shares");
+        ls.setToLocalStorage("sort", "shares");
     } else if (sort === "shares") {
         renderArticles.renderArticles(loadArticles());
         changeTextContent("sort_label", "Date");
-        setToLocalStorage("sort", "date");
+        ls.setToLocalStorage("sort", "date");
     }
-}
-
-// Local storage
-
-function setToLocalStorage(key, data) {
-    localStorage.setItem(key, data);
-}
-
-function getFromLocalStorage(key) {
-    return localStorage.getItem(key);
-}
-
-function clearLocalStorage() {
-    localStorage.clear();
 }
 
 function clearElement(elementId) {
@@ -68,12 +53,12 @@ function clearElement(elementId) {
 }
 
 function main() {
-    clearLocalStorage();
+    ls.clearLocalStorage();
     const art = loadArticles();
     console.log(art);
     clearElement("main");
     renderArticles.renderArticles(art);
-    setToLocalStorage("sort", "date");
+    ls.setToLocalStorage("sort", "date");
     /*document.getElementById("new").addEventListener("click", () => {
         clearMain();
         getArticles(1);
