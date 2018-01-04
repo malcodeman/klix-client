@@ -1,26 +1,10 @@
-const Xray = require("x-ray");
-const x = Xray();
 const fs = require("fs");
-const {
-    remote
-} = require("electron");
 
 const renderArticles = require("./assets/js/renderArticles");
 const sortArticles = require("./assets/js/sortArticles");
-const ls = require("./assets/js/localStorage")
-
-function getArticles(pageNumber, limit) {
-    x("https://www.klix.ba/najnovije/str" + pageNumber, "article", [{
-            headline: "a h1",
-            link: "a@href",
-            category: ".above .kategorija",
-            shares: ".above .shareovi",
-            comments: ".below .comments"
-        }])
-        .paginate(".sljedeca@href")
-        .limit(limit)
-        .write("response.json")
-}
+const ls = require("./assets/js/localStorage");
+const getArticles = require("./assets/js/getArticles");
+const windowControls = require("./assets/js/windowControls");
 
 function loadArticles() {
     return JSON.parse(fs.readFileSync("response.json", "utf8"));
@@ -53,6 +37,7 @@ function clearElement(elementId) {
 }
 
 function main() {
+    //getArticles.get(1,5);
     ls.clearLocalStorage();
     const art = loadArticles();
     console.log(art);
@@ -64,7 +49,7 @@ function main() {
         getArticles(1);
     });*/
     document.getElementById("x").addEventListener("click", () => {
-        remote.BrowserWindow.getFocusedWindow().close();
+        windowControls.close();
     });
     document.getElementById("sort").addEventListener("click", () => {
         changeSort(art);
