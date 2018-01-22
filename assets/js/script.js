@@ -36,13 +36,24 @@ function clearElement(elementId) {
     document.getElementById(elementId).innerHTML = "";
 }
 
+function formatArticles(articles) {
+    articles.forEach(article => {
+        if (article.shares.includes("k")) {
+            article.shares = article.shares.replace("k", "");
+            article.shares *= 1000;
+        }
+    });
+    return articles;
+}
+
 function main() {
     //getArticles.get(1,5);
     ls.clearLocalStorage();
-    const art = loadArticles();
+    let art = loadArticles();
     console.log(art);
+    let art2 = formatArticles(art);
     clearElement("main");
-    renderArticles.renderArticles(art);
+    renderArticles.renderArticles(art2);
     ls.setToLocalStorage("sort", "date");
     /*document.getElementById("new").addEventListener("click", () => {
         clearMain();
