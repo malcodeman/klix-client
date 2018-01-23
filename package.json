@@ -9,9 +9,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "x-ray": "^2.3.2"
+    "electron": "^1.7.11",
+    "osmosis": "^1.1.6"
   },
   "devDependencies": {
-    "electron": "^1.7.10"
+    "electron-rebuild": "^1.7.3"
   }
 }

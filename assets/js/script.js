@@ -3,8 +3,9 @@ const fs = require("fs");
 const renderArticles = require("./assets/js/renderArticles");
 const sortArticles = require("./assets/js/sortArticles");
 const ls = require("./assets/js/localStorage");
-const getArticles = require("./assets/js/getArticles");
+//const getArticles = require("./assets/js/getArticles");
 const windowControls = require("./assets/js/windowControls");
+const osmo = require("./assets/js/osmo");
 
 function loadArticles() {
     return JSON.parse(fs.readFileSync("response.json", "utf8"));
@@ -47,24 +48,28 @@ function formatArticles(articles) {
 }
 
 function main() {
-    //getArticles.get(1,5);
-    ls.clearLocalStorage();
-    let art = loadArticles();
-    console.log(art);
-    let art2 = formatArticles(art);
     clearElement("main");
-    renderArticles.renderArticles(art2);
+    for (let i = 1; i < 33; i++) {
+        let temp = osmo.get(i);
+        console.log(temp)
+        temp.then((res) => {
+            res = formatArticles(res);
+            renderArticles.renderArticles(res);
+        });
+    }
+    ls.clearLocalStorage();
     ls.setToLocalStorage("sort", "date");
-    /*document.getElementById("new").addEventListener("click", () => {
-        clearMain();
-        getArticles(1);
-    });*/
-    document.getElementById("x").addEventListener("click", () => {
-        windowControls.close();
-    });
-    document.getElementById("sort").addEventListener("click", () => {
-        changeSort(art);
-    });
 }
+
+document.getElementById("x").addEventListener("click", () => {
+    windowControls.close();
+});
+document.getElementById("sort").addEventListener("click", () => {
+    changeSort(art);
+});
+/*document.getElementById("new").addEventListener("click", () => {
+    clearMain();
+    getArticles(1);
+});*/
 
 main();
