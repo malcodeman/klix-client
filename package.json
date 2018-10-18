@@ -8,11 +8,7 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "electron": "^1.7.11",
-    "osmosis": "^1.1.6"
-  },
   "devDependencies": {
-    "electron-rebuild": "^1.7.3"
+    "electron": "^3.0.4"
   }
 }
