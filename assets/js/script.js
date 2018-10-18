@@ -28,7 +28,7 @@ function getLatest() {
 async function main() {
   const main = document.getElementById("main");
   const articles = await getLatest();
-  articles.map((article, index) => {
+  articles.articles.map((article, index) => {
     main.insertAdjacentHTML(
       "beforeend",
       Article({
