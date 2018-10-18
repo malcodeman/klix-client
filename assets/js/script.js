@@ -42,8 +42,4 @@ async function main() {
   });
 }
 
-document.getElementById("x").addEventListener("click", () => {
-  windowControls.close();
-});
-
 main();

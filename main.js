@@ -1,25 +1,17 @@
 const { app, BrowserWindow } = require("electron");
-const path = require("path");
-const url = require("url");
-let mainWindow;
-const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    minWidth: 1280,
-    minHeight: 720,
-    frame: false
+
+let win;
+function createWindow() {
+  win = new BrowserWindow({ minWidth: 800, minHeight: 600 });
+
+  win.loadFile("index.html");
+
+  win.webContents.openDevTools();
+
+  win.on("closed", () => {
+    win = null;
   });
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "index.html"),
-      protocol: "file:",
-      slashes: true
-    })
-  );
-  mainWindow.on("closed", () => {
-    mainWindow = null;
-  });
-  mainWindow.webContents.openDevTools();
-};
+}
 
 app.on("ready", createWindow);
 
@@ -30,7 +22,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  if (mainWindow === null) {
+  if (win === null) {
     createWindow();
   }
 });
