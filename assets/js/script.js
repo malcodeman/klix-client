@@ -43,3 +43,13 @@ async function main() {
 }
 
 main();
+
+document
+  .getElementById("close")
+  .addEventListener("click", windowControls.close);
+document
+  .getElementById("minimize")
+  .addEventListener("click", windowControls.minimize);
+document
+  .getElementById("zoom")
+  .addEventListener("click", windowControls.maximize);

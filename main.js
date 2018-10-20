@@ -2,7 +2,12 @@ const { app, BrowserWindow } = require("electron");
 
 let win;
 function createWindow() {
-  win = new BrowserWindow({ minWidth: 800, minHeight: 600 });
+  win = new BrowserWindow({
+    minWidth: 800,
+    minHeight: 600,
+    titleBarStyle: "customButtonsOnHover",
+    frame: false
+  });
 
   win.loadFile("index.html");
 
