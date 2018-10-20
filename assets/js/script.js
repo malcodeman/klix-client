@@ -1,7 +1,9 @@
+const { shell } = require("electron");
+
 const windowControls = require("./assets/js/windowControls");
 
 const Article = ({ id, url, lead, shares, comments }) => `
-<a class="article" href="${url}">
+<article class="article" data-url="${url}">
     <div>
         <span class="article-id">${id}</span>
         <span class="article-title">${lead}</span>
@@ -10,7 +12,7 @@ const Article = ({ id, url, lead, shares, comments }) => `
         <span class="article-shares">${shares} shares</span>
         <span class="article-comments">${comments} comments</span>
     </div>
-</a>
+</article>
 `;
 
 function getLatest() {
@@ -23,6 +25,11 @@ function getLatest() {
     .catch(error => {
       console.log(error);
     });
+}
+
+function openExternalUrl() {
+  const url = this.getAttribute("data-url");
+  shell.openExternal(url);
 }
 
 async function main() {
@@ -39,6 +46,9 @@ async function main() {
         comments: article.comments
       })
     );
+  });
+  Array.from(document.getElementsByClassName("article")).forEach(element => {
+    element.addEventListener("click", openExternalUrl);
   });
 }
 
