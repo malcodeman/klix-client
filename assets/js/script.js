@@ -15,6 +15,17 @@ const Article = ({ id, url, lead, shares, comments }) => `
 </article>
 `;
 
+const Error = ({ text }) => `
+<div class="error-message">${text}</div>
+`;
+
+const Loader = ({ message }) => `
+<div class="loader-wrapper">
+  <div class="loader"></div>
+  <span class="loader-message">${message}</span>
+</div>
+`;
+
 function getLatest() {
   const url = "https://micro-klix.herokuapp.com/latest";
   return fetch(url)
@@ -23,7 +34,13 @@ function getLatest() {
       return articles;
     })
     .catch(error => {
-      console.log(error);
+      const main = document.getElementById("main");
+      main.insertAdjacentHTML(
+        "beforeend",
+        Error({
+          text: "There was an error fetching articles"
+        })
+      );
     });
 }
 
@@ -34,22 +51,31 @@ function openExternalUrl() {
 
 async function main() {
   const main = document.getElementById("main");
+  main.insertAdjacentHTML(
+    "beforeend",
+    Loader({
+      message: "Fetching posts"
+    })
+  );
   const articles = await getLatest();
-  articles.articles.map((article, index) => {
-    main.insertAdjacentHTML(
-      "beforeend",
-      Article({
-        id: index,
-        url: article.url,
-        lead: article.lead,
-        shares: article.shares,
-        comments: article.comments
-      })
-    );
-  });
-  Array.from(document.getElementsByClassName("article")).forEach(element => {
-    element.addEventListener("click", openExternalUrl);
-  });
+  if (articles && Array.isArray(articles.articles)) {
+    main.innerHTML = "";
+    articles.articles.map((article, index) => {
+      main.insertAdjacentHTML(
+        "beforeend",
+        Article({
+          id: index,
+          url: article.url,
+          lead: article.lead,
+          shares: article.shares,
+          comments: article.comments
+        })
+      );
+    });
+    Array.from(document.getElementsByClassName("article")).forEach(element => {
+      element.addEventListener("click", openExternalUrl);
+    });
+  }
 }
 
 main();

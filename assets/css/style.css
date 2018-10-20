@@ -61,7 +61,6 @@
   border-bottom: 1px solid #444;
   color: #f5f5f5;
   display: flex;
-  font-family: "Open Sans", sans-serif;
   font-size: 0.8rem;
   justify-content: space-between;
   min-height: 36px;
@@ -88,6 +87,44 @@
 
 .article-shares {
   margin-right: 1rem;
+}
+
+.error-message {
+  font-size: 0.8rem;
+  color: #ff2d55;
+}
+
+/* Loader */
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.loader {
+  border: 2px solid #000;
+  border-radius: 50%;
+  border-top: 2px solid #fff;
+  width: 24px;
+  height: 24px;
+  animation: rotate360 2s linear infinite;
+  margin: 0 6px;
+}
+
+.loader-message {
+  font-size: 0.8rem;
+  color: #fff;
 }
 
 /* Scrollbar */
