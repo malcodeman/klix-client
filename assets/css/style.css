@@ -49,8 +49,6 @@
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
   overflow-y: auto;
   background-color: #1d1e21;
 }
@@ -65,24 +63,32 @@
   justify-content: space-between;
   min-height: 36px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   cursor: pointer;
+  padding: 10px;
 }
 
 .article:hover {
   color: #00c7fe;
 }
 
-.article div:first-child {
-  margin-left: 1rem;
-}
-
-.article div:last-child {
-  margin-right: 1rem;
+@media (min-width: 992px) {
+  .article {
+    padding: 0 10px;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .article-id {
   margin-right: 1rem;
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .article-id {
+    display: inline;
+  }
 }
 
 .article-shares {
