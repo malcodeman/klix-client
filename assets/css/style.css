@@ -100,6 +100,21 @@
   color: #ff2d55;
 }
 
+.footer {
+  display: flex;
+  padding: 10px;
+}
+
+.pagination-btn {
+  color: #fff;
+  font-size: 0.8rem;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 /* Loader */
 
 @keyframes rotate360 {
