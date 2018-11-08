@@ -13,6 +13,7 @@
   background-color: #26272a;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .header {

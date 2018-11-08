@@ -20,19 +20,8 @@ const Article = props => {
 };
 
 class Articles extends Component {
-  state = {
-    articles: null
-  };
-  componentDidMount() {
-    this.getPage(1);
-  }
-  getPage = async page => {
-    const url = `https://micro-klix.herokuapp.com/pages/${page}`;
-    const articles = await fetch(url).then(response => response.json());
-    this.setState({ articles });
-  };
   render() {
-    const { articles } = this.state;
+    const { articles, fetching } = this.props;
 
     return (
       <div>
