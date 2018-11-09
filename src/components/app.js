@@ -50,10 +50,12 @@ export default class App extends Component {
             <button class={style.minimize} />
             <button class={style.zoom} />
           </header>
-          <Pagination
-            fetching={fetching}
-            handleNextPage={this.handleNextPage}
-          />
+          <footer class={style.footer}>
+            <Pagination
+              fetching={fetching}
+              handleNextPage={this.handleNextPage}
+            />
+          </footer>
         </aside>
         <main class={style.main}>
           <Router>

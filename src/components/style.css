@@ -22,6 +22,12 @@
   -webkit-app-region: drag;
 }
 
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 6px;
+}
+
 .header:hover > .close {
   background-color: #ff6052;
   border-color: #ff6052;

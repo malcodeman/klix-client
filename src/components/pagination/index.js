@@ -1,13 +1,18 @@
 import { render, Component } from "preact";
 
+import Loader from "../loader";
+import style from "./style";
+
 class Pagination extends Component {
   render() {
     const { fetching, handleNextPage } = this.props;
 
     return fetching ? (
-      <span>Loading</span>
+      <Loader message={"Fetching"} />
     ) : (
-      <span onClick={handleNextPage}>Next</span>
+      <button onClick={handleNextPage} class={style.next}>
+        Next
+      </button>
     );
   }
 }
