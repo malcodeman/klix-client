@@ -32,11 +32,12 @@ export default class App extends Component {
     this.setState({ articles, fetching: false });
   };
 
-  handleNextPage = async () => {
+  handleNextPage = () => {
     const { currentPage } = this.state;
 
-    await this.setState({ currentPage: currentPage + 1 });
-    this.getPage(currentPage);
+    const nextPage = currentPage + 1;
+    this.setState({ currentPage: nextPage });
+    this.getPage(nextPage);
   };
   render() {
     const { articles, fetching } = this.state;
