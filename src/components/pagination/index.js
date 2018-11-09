@@ -4,16 +4,32 @@ import Loader from "../loader";
 import style from "./style";
 
 class Pagination extends Component {
-  render() {
-    const { fetching, handleNextPage } = this.props;
+  renderButtons = () => {
+    const { handleNextPage, handlePreviousPage, currentPage } = this.props;
 
-    return fetching ? (
-      <Loader message={"Fetching"} />
-    ) : (
-      <button onClick={handleNextPage} class={style.next}>
-        Next
-      </button>
-    );
+    if (currentPage > 1) {
+      return (
+        <div class={style.buttons}>
+          <button onClick={handlePreviousPage} class={style.btn}>
+            Previous
+          </button>
+          <button onClick={handleNextPage} class={style.btn}>
+            Next
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <button onClick={handleNextPage} class={style.btn}>
+          Next
+        </button>
+      );
+    }
+  };
+  render() {
+    const { fetching } = this.props;
+
+    return fetching ? <Loader message={"Fetching"} /> : this.renderButtons();
   }
 }
 

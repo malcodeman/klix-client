@@ -39,8 +39,16 @@ export default class App extends Component {
     this.setState({ currentPage: nextPage });
     this.getPage(nextPage);
   };
+
+  handlePreviousPage = () => {
+    const { currentPage } = this.state;
+
+    const nextPage = currentPage - 1;
+    this.setState({ currentPage: nextPage });
+    this.getPage(nextPage);
+  };
   render() {
-    const { articles, fetching } = this.state;
+    const { articles, fetching, currentPage } = this.state;
 
     return (
       <div class={style.app}>
@@ -54,6 +62,8 @@ export default class App extends Component {
             <Pagination
               fetching={fetching}
               handleNextPage={this.handleNextPage}
+              handlePreviousPage={this.handlePreviousPage}
+              currentPage={currentPage}
             />
           </footer>
         </aside>
