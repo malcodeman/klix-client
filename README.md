@@ -6,6 +6,8 @@
 Modern client for [klix.ba](https://www.klix.ba).
 Utilizes [micro-klix](https://github.com/malcodeman/micro-klix).
 
+![Screenshot](docs/images/screenshot.png)
+
 ## Usage
 
 .env file example
