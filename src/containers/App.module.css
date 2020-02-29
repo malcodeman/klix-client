@@ -34,3 +34,16 @@
   max-width: 992px;
   width: 100%;
 }
+
+.footer {
+  padding: 16px;
+  background-color: #3a3a3a;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+}
+
+.footerContent {
+  max-width: 992px;
+  width: 100%;
+}
